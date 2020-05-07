@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 export default class Product extends Component {
-    render() {
-        return (
-            <div> Hello from product </div>
-        );
-    }
+  render() {
+    return (
+      <div> Hello from product </div>
+    );
+  }
 }
