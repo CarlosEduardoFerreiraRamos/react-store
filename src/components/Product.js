@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ProductConsumer } from "../context";
+import PropTypes from 'prop-types'
 
 export default class Product extends Component {
   render() {
@@ -21,11 +22,11 @@ export default class Product extends Component {
         <div className="card">
           <div className="img-container p-5" onClick={console.log('Click')}>
             <Link to="/details">
-              <img src={img} className="card-img-top" alt="product"/>
+              <img src={img} className="card-img-top" alt="product" />
             </Link>
-            <button className="cart-btn" disabled={!!inCart} oncCLick={() => {console.log('Added to the cart')}}>
+            <button className="cart-btn" disabled={!!inCart} oncCLick={() => { console.log('Added to the cart') }}>
 
-            {inCart? (<p className="text-capitalize mb-0" disabled> in cart</p>) : <i className="fas fa-cart-plus"></i> }
+              {inCart ? (<p className="text-capitalize mb-0" disabled> in cart</p>) : <i className="fas fa-cart-plus"></i>}
             </button>
           </div>
           <div className="card-footer d-flex justify-content-between">
@@ -41,6 +42,20 @@ export default class Product extends Component {
       </ProductWrapper>
     );
   }
+}
+
+Product.propTypes = {
+  product: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    img: PropTypes.string,
+    price: PropTypes.number,
+    company: PropTypes.string,
+    info: PropTypes.string,
+    inCart: PropTypes.string,
+    count: PropTypes.number,
+    total: PropTypes.number,
+  })
 }
 
 const ProductWrapper = styled.div`
