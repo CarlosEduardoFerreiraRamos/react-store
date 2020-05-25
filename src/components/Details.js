@@ -8,16 +8,17 @@ export default class Details extends Component {
   render() {
     return (
       <ProductConsumer>
-        {({ detailProduct: {
-          id,
-          title,
-          img,
-          price,
-          company,
-          info,
-          inCart,
-        } }) =>
-          <div className="container py-5">
+        {(value) => {
+          const { detailProduct: {
+            id,
+            title,
+            img,
+            price,
+            company,
+            info,
+            inCart,
+          } } = value
+          return (<div className="container py-5">
             <div className="row">
               <div className="caol-10 mx-auto text-center text-slanted text-blue my-5">
                 <h1>{title}</h1>
@@ -46,14 +47,21 @@ export default class Details extends Component {
                   {info}
                 </p>
                 <div>
-                  <Link to='/'></Link>
-                  <Button> Back to Product</Button>
+                  <Link to='/'>
+                    <Button> Back to Product</Button>
+                  </Link>
+                  <Button cart
+                  disabled={!!inCart}
+                  onClick={() => value.addToCart(id)}
+                  >
+                    {inCart ? "inCart" : "add to cart"}
+                  </Button>
                 </div>
               </div>
             </div>
 
-          </div>
-        }
+          </div>)
+  }}
       </ProductConsumer>
     );
   }
