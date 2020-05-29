@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import logo from "../logo.svg";
-import styled from "styled-components"
+import styled from "styled-components";
 import { ButtonContainer } from "./Button";
 
 export default class Navbar extends Component {
@@ -33,10 +33,10 @@ export default class Navbar extends Component {
 }
 
 const NavWrapper = styled.nav`
-  background: var(--mainBlue)!important;
+  background: var(--mainBlue) !important;
   .nav-link {
     color: var(--mainWhite) !important;
     font-size: 1.3rem;
     text-transform: capitalize;
   }
-`
+`;
