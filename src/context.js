@@ -52,17 +52,62 @@ class ProductProvider extends Component {
 
   closeModal = () => this.setState(() => ({ modalOpen: false }));
 
-  incrementation = (id) => console.log("increment " + id);
+  incrementation = (productId) => {
+    const cart = [...this.state.cart];
+    const product = cart.find(({ id }) => id === productId);
+    product.count++;
+    product.total = product.count * product.price;
 
-  decrement = (id) => console.log("decrement " + id);
+    this.setState(
+      () => ({ cart }),
+      () => this.addTotals()
+    );
+  };
 
-  removeItem = (id) => console.log("removeItem " + id);
+  decrement = (productId) => {
+    const cart = [...this.state.cart];
+    const product = cart.find(({ id }) => id === productId);
+    product.count--;
 
-  clearCart = () => console.log("cleared ");
+    if (product.count === 0) {
+      this.removeItem(productId);
+    } else {
+      product.total = product.count * product.price;
+      this.setState(
+        () => ({ cart }),
+        () => this.addTotals()
+      );
+    }
+  };
+
+  removeItem = (productId) => {
+    const cart = [...this.state.cart].filter(({ id }) => id !== productId);
+
+    const products = [...this.state.products];
+    const product = products.find(({ id }) => id === productId);
+    product.inCart = false;
+    product.count = 0;
+    product.total = 0;
+
+    this.setState(
+      () => ({ cart, products }),
+      () => this.addTotals()
+    );
+  };
+
+  clearCart = () => {
+    this.setState(
+      () => ({ cart: [] }),
+      () => {
+        this.setProduct();
+        this.addTotals();
+      }
+    );
+  };
 
   addTotals = () => {
     const cartSubtotal = this.state.cart.reduce((s, e) => (s += e.total), 0);
-    const cartTax = parseInt((cartSubtotal * 0.1).toFixed(2));
+    const cartTax = parseFloat((cartSubtotal * 0.1).toFixed(2));
     const cartTotal = cartSubtotal + cartTax;
 
     this.setState(() => ({ cartSubtotal, cartTax, cartTotal }));
